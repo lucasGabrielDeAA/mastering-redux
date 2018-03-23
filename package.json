@@ -12,6 +12,7 @@
     "react-devtool": "react-devtools"
   },
   "dependencies": {
+    "prop-types": "^15.6.1",
     "react": "^16.3.0-alpha.1",
     "react-native": "0.54.2",
     "react-redux": "^5.0.7",
