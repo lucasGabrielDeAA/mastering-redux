@@ -1,3 +1,5 @@
+import { ADD_TODO } from '../actions/todos';
+
 const initialState = [
   'Make coffee',
   'Learn goNative',
@@ -6,8 +8,8 @@ const initialState = [
 
 export default function todos(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_TODO':
-      return [];
+    case ADD_TODO:
+      return [...state, action.text];
     default:
       return state;
   }
