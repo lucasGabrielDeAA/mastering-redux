@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { bindActionCreators } from 'redux';
 
@@ -17,17 +18,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  todoContainer: {
+    flexDirection: 'row',
+  },
 });
 
-const TodoList = ({ todos, addTodo }) => {
-  return (
-    <View style={styles.container}>
-      { todos.map(todo => <Text>{todo}</Text>) }
-      <TouchableOpacity onPress={() => { addTodo('Make coffee again'); }}>
-        <Text>Add Todo</Text>
-      </TouchableOpacity>
-    </View>
-  );
+const TodoList = ({ todos, addTodo, removeTodo }) => (
+  <View style={styles.container}>
+    { todos.map(todo => (
+      <View key={todo.id} style={styles.todoContainer}>
+        <Text>{todo.text}</Text>
+        <TouchableOpacity onPress={() => { removeTodo(todo.id); }}>
+          <Text>Remove</Text>
+        </TouchableOpacity>
+      </View>
+    )) }
+    <TouchableOpacity onPress={() => { addTodo('Make coffee again'); }}>
+      <Text>Add Todo</Text>
+    </TouchableOpacity>
+  </View>
+);
+
+TodoList.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    text: PropTypes.string,
+  })).isRequired,
+  addTodo: PropTypes.func.isRequired,
+  removeTodo: PropTypes.func.isRequired,
 };
 
 const matStateToProps = state => ({
