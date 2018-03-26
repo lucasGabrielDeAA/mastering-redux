@@ -133,3 +133,52 @@ export default store;
 ```
 
 Now, we can use the reactotron to watch our redux's workflow and perfoms some redux actions too.
+
+## Installing [Redux-Saga](https://redux-saga.js.org/)
+
+We going to use saga as our middleware to perform redux actions. First of all, install the redux-saga using the following command:
+
+```
+yarn add redux-saga
+```
+
+After installation, we need to create our file's structure to configure our saga.
+
+Under the store's folder, create a folder called sagas, with a index.js, this file will mix it up all of ours sagas files configuration of the project, place the the following content in the file:
+
+```
+import { all } from 'redux-saga/effects';
+
+export default function* rootSaga() {
+  return yield all([
+
+  ]);
+}
+```
+
+Now, we need to add our saga's middleware to our redux's file configuration.
+
+In the index.js of the store's folder, perform the following changes:
+
+```
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+
+import reducers from './reducers';
+import sagas from './sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const middleware = [
+  sagaMiddleware,
+];
+
+const createApropriateStore = __DEV__ ? console.tron.createStore : createStore;
+const store = createApropriateStore(reducers, applyMiddleware(...middleware));
+
+sagaMiddleware.run(sagas);
+
+export default store;
+```
+
+Now, we already have the saga configured to our project.
