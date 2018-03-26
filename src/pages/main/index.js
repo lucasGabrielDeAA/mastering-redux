@@ -7,6 +7,10 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as FavoriteActions from 'store/actions/favorites';
 
 import styles from './styles';
 
@@ -15,9 +19,27 @@ class Main extends Component {
     header: null,
   };
 
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func,
+    }).isRequired,
+    addFavoriteRequest: PropTypes.func.isRequired,
+  }
+
+  state = {
+    repositoryName: '',
+  };
+
   navigateToFavorites = () => {
     this.props.navigation.navigate('Favorites');
   }
+
+  addRepository = () => {
+    if (!this.state.repositoryName.length) return;
+
+    this.props.addFavoriteRequest(this.state.repositoryName);
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -36,10 +58,12 @@ class Main extends Component {
               autoCorrect={false}
               placeholder="usuario/repositório"
               underlineColorAndroid="transparent"
+              value={this.state.repositoryName}
+              onChangeText={repositoryName => this.setState({ repositoryName })}
             />
             <TouchableOpacity
               style={styles.button}
-              onPress={() => {}}
+              onPress={this.addRepository}
               activeOpacity={0.8}
             >
               <Text style={styles.buttonText}>Adicionar aos favoritos</Text>
@@ -53,8 +77,11 @@ class Main extends Component {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    )
+    );
   }
 }
 
-export default Main;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(FavoriteActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(Main);
