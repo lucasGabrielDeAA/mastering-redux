@@ -2,10 +2,7 @@ import { call, put, select } from 'redux-saga/effects';
 
 import api from 'services/api';
 
-import {
-  addFavoriteSuccess,
-  addFavoriteError,
-} from 'store/actions/favorites';
+import { Creators as FavoritesActions } from 'store/ducks/favorites';
 
 export function* addFavoriteRequest(action) {
   try {
@@ -14,11 +11,11 @@ export function* addFavoriteRequest(action) {
     const favorites = yield select(state => state.favorites.data);
 
     if (favorites.find(favorite => favorite.id === response.data.id)) {
-      yield put(addFavoriteError('Repositório já adicionado'));
+      yield put(FavoritesActions.addFavoriteError('Repositório já adicionado'));
     } else {
-      yield put(addFavoriteSuccess(response.data));
+      yield put(FavoritesActions.addFavoriteSuccess(response.data));
     }
   } catch (error) {
-    yield put(addFavoriteError('Repositório não encontrado'));
+    yield put(FavoritesActions.addFavoriteError('Repositório não encontrado'));
   }
 }
