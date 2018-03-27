@@ -182,3 +182,32 @@ export default store;
 ```
 
 Now, we already have the saga configured to our project.
+
+## Installing the Reactotron-redux-saga
+
+Run the following command:
+
+```
+yarn add reactotron-redux-saga
+```
+
+Now, in the Reactotron.js under the src/config folder, add the following lines:
+
+```
+import sagaPlugin from 'reactotron-redux-saga';
+
+...
+.use(sagaPlugin())
+...
+```
+
+Now, in the index.js under the store folder, do the following changes:
+
+```
+...
+const sagaMonitor = __DEV__ ? console.tron.createSagaMonitor() : null;
+const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+...
+```
+
+After all, we already have the saga plugged to our reactotron.
