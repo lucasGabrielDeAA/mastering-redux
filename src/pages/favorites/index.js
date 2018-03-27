@@ -42,7 +42,7 @@ class Favorites extends Component {
 }
 
 const mapStateToProps = state => ({
-  favorites: state.favorites,
+  favorites: state.favorites.data,
 });
 
 export default connect(mapStateToProps)(Favorites);
