@@ -42,6 +42,7 @@ class Main extends Component {
   }
 
   render() {
+    console.tron.log(this.props.favorites);
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -84,6 +85,7 @@ class Main extends Component {
 
 const mapStateToProps = state => ({
   favoritesCount: state.favorites.length,
+  favorites: state.favorites,
 });
 
 const mapDispatchToProps = dispatch =>
