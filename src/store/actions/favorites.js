@@ -5,9 +5,9 @@ export const addFavoriteRequest = repositoryName => ({
   },
 });
 
-export const addFavoriteSuccess = respository => ({
+export const addFavoriteSuccess = repository => ({
   type: 'ADD_FAVORITE_SUCCESS',
   payload: {
-    respository,
+    repository,
   },
 });
