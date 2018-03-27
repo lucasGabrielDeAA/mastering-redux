@@ -58,6 +58,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
+  error: {
+    fontWeight: 'bold',
+    color: colors.danger,
+    alignSelf: 'center',
+    marginBottom: metrics.baseMargin,
+  },
+  loading: {
+    color: colors.darkTransparent,
+  },
 });
 
 export default styles;

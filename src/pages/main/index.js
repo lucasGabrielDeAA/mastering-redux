@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -25,6 +26,8 @@ class Main extends Component {
     }).isRequired,
     addFavoriteRequest: PropTypes.func.isRequired,
     favoritesCount: PropTypes.number.isRequired,
+    error: PropTypes.oneOfType([null, PropTypes.string]),
+    loading: PropTypes.bool,
   }
 
   state = {
@@ -42,7 +45,6 @@ class Main extends Component {
   }
 
   render() {
-    console.tron.log(this.props.favorites);
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -54,6 +56,10 @@ class Main extends Component {
           </Text>
 
           <View style={styles.form}>
+            { !!this.props.error && (
+              <Text style={styles.error}>{this.props.error}</Text>
+            )}
+
             <TextInput
               style={styles.input}
               autoCapitalize="none"
@@ -68,7 +74,10 @@ class Main extends Component {
               onPress={this.addRepository}
               activeOpacity={0.8}
             >
-              <Text style={styles.buttonText}>Adicionar aos favoritos</Text>
+              { this.props.loading ?
+                <ActivityIndicator size="small" color={styles.loading.color} />
+                : <Text style={styles.buttonText}>Adicionar aos favoritos</Text>
+              }
             </TouchableOpacity>
           </View>
         </View>
@@ -84,8 +93,9 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => ({
-  favoritesCount: state.favorites.length,
-  favorites: state.favorites,
+  favoritesCount: state.favorites.data.length,
+  error: state.favorites.error,
+  loading: state.favorites.loading,
 });
 
 const mapDispatchToProps = dispatch =>
